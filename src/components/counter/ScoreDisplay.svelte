@@ -1,13 +1,11 @@
 <script lang="ts">
-	import { slide } from 'svelte/transition';
-
 	export let score: number = 0;
 	export let size: 'md' | 'xl' = 'md';
 	export let side: 'home' | 'away';
 </script>
 
-<div transition:slide class={side} class:is-xl={size === 'xl'}>
-	<span transition:slide>
+<div class={side} class:is-xl={size === 'xl'}>
+	<span>
 		{score}
 	</span>
 </div>

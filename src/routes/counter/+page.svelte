@@ -1,18 +1,12 @@
 <script lang="ts">
-	import ControlPanel from '@//components/counter/ControlPanel.svelte';
-	import Scoreboard from '@//components/counter/Scoreboard.svelte';
+	import ControlPanel from '@components/counter/ControlPanel.svelte';
+	import Scoreboard from '@components/counter/Scoreboard.svelte';
 </script>
 
 <div class="main-wrapper">
 	<Scoreboard />
 	<ControlPanel />
 </div>
-
-<!-- 
-	TODO:
-	2. Redesign the UI
-	3. Add animations and finioshing touches
- -->
 
 <style lang="scss">
 	.main-wrapper {
