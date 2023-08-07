@@ -1,0 +1,18 @@
+<script lang="ts">
+	let klass: string | null = null;
+	export { klass as class };
+	export let size: number = 32;
+</script>
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	width={size}
+	height={size}
+	viewBox="0 0 24 24"
+	class={klass}
+>
+	<path
+		fill="currentColor"
+		d="m12.37 15.835l6.43-6.63C19.201 8.79 18.958 8 18.43 8H5.57c-.528 0-.771.79-.37 1.205l6.43 6.63c.213.22.527.22.74 0Z"
+	/>
+</svg>

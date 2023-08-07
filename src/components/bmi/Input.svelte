@@ -5,6 +5,8 @@
 	export let name: string;
 	export let placeholder: string;
 	export let unit: string;
+	export let min: number | null = null;
+	export let max: number | null = null;
 	let focused: boolean = false;
 
 	const dispatch = createEventDispatcher();
@@ -14,6 +16,17 @@
 			dispatch('enter');
 		}
 	};
+
+	function validateNumber() {
+		if (value && min && value < min) {
+			value = min;
+			return;
+		}
+		if (value && max && value > max) {
+			value = max;
+			return;
+		}
+	}
 </script>
 
 <div
@@ -24,7 +37,7 @@
 	<label for={name} class="w-full {focused ? 'text-lime-500' : 'text-slate-500'}">
 		Please inter your {name}
 	</label>
-	<div class="flex justify-start items-center w-full">
+	<div class="relative flex justify-start items-center w-full">
 		<input
 			{name}
 			id={name}
@@ -32,11 +45,16 @@
 			{placeholder}
 			type="number"
 			inputmode="numeric"
+			{min}
+			{max}
 			on:keypress={onKeyPress}
 			on:focus={() => (focused = true)}
-			on:blur={() => (focused = false)}
+			on:blur={() => ((focused = false), validateNumber())}
 			class="bg-slate-900 py-2 ps-0 text-xl w-full focus:outline-none placeholder:text-slate-600"
 		/>
-		<span class="font-bold {focused ? 'text-lime-500' : 'text-slate-600'}">{unit}</span>
+		<div class="bg-slate-900 absolute h-full w-8 inset-y-0 right-6" />
+		<span class="font-bold {focused ? 'text-lime-500' : 'text-slate-600'} w-8 text-right">
+			{unit}
+		</span>
 	</div>
 </div>
