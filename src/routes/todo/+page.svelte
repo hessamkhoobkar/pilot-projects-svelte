@@ -3,6 +3,9 @@
 
 	import TaskForm from '@components/todo/TaskForm.svelte';
 	import TaskCard from '@components/todo/TaskCard.svelte';
+
+	$: inprogressList = $todoList.filter((todo) => !todo.isCompleted);
+	$: completedList = $todoList.filter((todo) => todo.isCompleted);
 </script>
 
 <div
@@ -11,9 +14,21 @@
 	<div class="w-full max-w-5xl mx-auto p-4 flex flex-col justify-start items-start">
 		<TaskForm />
 		<div class="flex flex-col justify-start items-start gap-4 mt-6 w-full">
-			<!-- the list -->
 			{#if $todoList && $todoList.length > 0}
-				{#each $todoList as todo}
+				<div class="w-full">
+					<span class="text-2xl font-bold">Task List</span>
+					<span class="text-sm font-bold text-orange-500 ms-1">({inprogressList.length})</span>
+					<div class="h-px w-full bg-[#21262d] mt-2" />
+				</div>
+				{#each inprogressList as todo (todo.id)}
+					<TaskCard {todo} />
+				{/each}
+				<div class="w-full mt-4">
+					<span class="text-2xl font-bold">Completed List</span>
+					<span class="text-sm font-bold text-orange-500 ms-1">({completedList.length})</span>
+					<div class="h-px w-full bg-[#21262d] mt-2" />
+				</div>
+				{#each completedList as todo (todo.id)}
 					<TaskCard {todo} />
 				{/each}
 			{:else}

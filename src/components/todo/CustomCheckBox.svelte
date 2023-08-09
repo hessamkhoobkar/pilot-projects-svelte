@@ -1,11 +1,23 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+
 	let klass: string;
 	export { klass as class };
 	export let label: string;
+
+	const dispatch = createEventDispatcher();
+
+	export let checked = false;
+
+	function handleCheck() {
+		dispatch('check', {
+			completed: checked
+		});
+	}
 </script>
 
 <div class="flex justify-start items-center {klass}">
-	<input type="checkbox" name="task-id" id="task-id" />
+	<input id="task-id" name="task-id" type="checkbox" bind:checked on:change={handleCheck} />
 	<label for="task-id"> {label} </label>
 </div>
 

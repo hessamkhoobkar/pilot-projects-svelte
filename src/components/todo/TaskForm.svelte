@@ -33,7 +33,7 @@
 
 <div class="w-full bg-[#0d1117] border border-[#30363d] rounded-xl p-4">
 	<form action="" class="flex justify-start items-start flex-wrap gap-4" on:submit={formSubmit}>
-		<input type="text" class="w-full" bind:value={taskTitle} />
+		<input type="text" class="w-full" bind:value={taskTitle} placeholder="Task title" />
 		<CustomSelect
 			bind:selectedOption={category}
 			options={allCategories}

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Todo } from '@customTypes/todo/index';
+	import { todoList } from '@stores/todo/todolist';
 
 	import CustomCheckBox from './CustomCheckBox.svelte';
 	import Delete from './icons/Delete.svelte';
@@ -17,6 +18,14 @@
 			y = event.pageY - targetElement.offsetTop;
 		}
 	}
+
+	function handleComplete(event: CustomEvent<{ completed: boolean }>) {
+		todo.isCompleted = event.detail.completed;
+
+		todoList.update((todos) => {
+			return todos;
+		});
+	}
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -29,11 +38,21 @@
 >
 	<div class="w-full bg-[#0d1117] rounded-xl p-4 relative z-10">
 		<div class="flex justify-start items-center w-full mb-4">
-			<CustomCheckBox label={todo.taskTitle} class="grow" />
+			<CustomCheckBox
+				label={todo.taskTitle}
+				class="grow"
+				on:check={handleComplete}
+				checked={todo.isCompleted}
+			/>
 
 			<div class="flex justify-start items-center ms-auto">
 				<button
 					class="bg-[#21262d] border text-[#8b949e] border-[#30363d] rounded-lg p-2 hover:bg-red-950 hover:bg-opacity-40 hover:border-rose-800 hover:text-rose-500 transition-all duration-200 ease-in-out"
+					on:click={() => {
+						todoList.update((todos) => {
+							return todos.filter((todo) => todo.id !== todo.id);
+						});
+					}}
 				>
 					<Delete size={20} />
 				</button>
@@ -43,7 +62,9 @@
 			<div class="flex justify-start items-center">
 				<Tag size={24} class="text-[#484f58] {todo.category ? '' : 'text-opacity-30'}" />
 				{#if todo.category}
-					<span class="text-sm bg-blue-800 bg-opacity-40 text-blue-500 ms-4 rounded-full px-3 py-1">
+					<span
+						class="text-sm bg-orange-900 bg-opacity-30 text-orange-500 ms-4 rounded-full px-3 py-1"
+					>
 						{todo.category || ''}
 					</span>
 				{/if}
